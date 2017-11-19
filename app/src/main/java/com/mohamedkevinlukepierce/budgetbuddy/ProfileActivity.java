@@ -32,13 +32,6 @@ public class ProfileActivity extends AppCompatActivity{ //profile selection logi
         ImageButton profile2Edit = (ImageButton) findViewById(R.id.editButton2);
         ImageButton profile3Edit = (ImageButton) findViewById(R.id.editButton3);
 
-        if (state == 1)
-            profile1.setText(ProfileEvent.profileUserText.getText());
-        else if (state == 2)
-            profile2.setText(ProfileEvent.profileUserText.getText());
-        else if (state == 3)
-            profile3.setText(ProfileEvent.profileUserText.getText());
-
         profile1.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {

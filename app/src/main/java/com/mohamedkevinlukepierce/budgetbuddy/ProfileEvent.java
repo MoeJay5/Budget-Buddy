@@ -16,6 +16,7 @@ public class ProfileEvent extends AppCompatActivity { //Profile Objects
 
 
     public static final String SHARED_PREFS = "ProfileNames";
+
     public static EditText profileUserText;
     private ImageButton addProfileBtn;
 
@@ -24,26 +25,26 @@ public class ProfileEvent extends AppCompatActivity { //Profile Objects
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
 
+        SharedPreferences sharedProfiles = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedProfiles.edit();
+
         profileUserText = (EditText) findViewById(R.id.profileUserText);
         addProfileBtn = (ImageButton) findViewById(R.id.addProfileSelect);
-        SharedPreferences profiles = getSharedPreferences(SHARED_PREFS, 0);
-        SharedPreferences.Editor editor = profiles.edit();
-        editor.clear();
 
         if (ProfileActivity.state == 1) {
-            String btnText = ProfileActivity.profile1.getText().toString();
+            String btnText = sharedProfiles.getString("profile1", "No name defined");//"No name defined" is the default value.
             editor.putString("profile1", btnText);
             editor.apply();
             editor.commit();
         }
         else if (ProfileActivity.state == 2){
-            String btnText = ProfileActivity.profile2.getText().toString();
+            String btnText = sharedProfiles.getString("profile2", "No name defined");//"No name defined" is the default value.
             editor.putString("profile2", btnText);
             editor.apply();
             editor.commit();
         }
         else if (ProfileActivity.state == 3) {
-            String btnText = ProfileActivity.profile3.getText().toString();
+            String btnText = sharedProfiles.getString("profile3", "No name defined");//"No name defined" is the default value.
             editor.putString("profile3", btnText);
             editor.apply();
             editor.commit();
@@ -70,6 +71,16 @@ public class ProfileEvent extends AppCompatActivity { //Profile Objects
         addProfileBtn.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
+                        SharedPreferences sharedProfiles = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedProfiles.edit();
+                        if (ProfileActivity.state == 1)
+                            editor.putString("profile1", profileUserText.getText().toString());
+                        else if (ProfileActivity.state == 2)
+                            editor.putString("profile2", profileUserText.getText().toString());
+                        else if (ProfileActivity.state == 3)
+                            editor.putString("profile3", profileUserText.getText().toString());
+                        editor.apply();
+                        editor.commit();
                         Intent intent = new Intent(getApplicationContext(),  ProfileActivity.class);
                         startActivity(intent);
                     }

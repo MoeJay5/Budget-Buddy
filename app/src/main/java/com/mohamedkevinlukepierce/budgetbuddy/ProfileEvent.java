@@ -1,6 +1,7 @@
 package com.mohamedkevinlukepierce.budgetbuddy;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
@@ -9,10 +10,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import java.io.*;
+
 
 public class ProfileEvent extends AppCompatActivity { //Profile Objects
 
+
+    public static final String SHARED_PREFS = "ProfileNames";
     public static EditText profileUserText;
     private ImageButton addProfileBtn;
 
@@ -23,13 +26,28 @@ public class ProfileEvent extends AppCompatActivity { //Profile Objects
 
         profileUserText = (EditText) findViewById(R.id.profileUserText);
         addProfileBtn = (ImageButton) findViewById(R.id.addProfileSelect);
+        SharedPreferences profiles = getSharedPreferences(SHARED_PREFS, 0);
+        SharedPreferences.Editor editor = profiles.edit();
+        editor.clear();
 
-        if (ProfileActivity.state == 1)
-            profileUserText.setText(ProfileActivity.profile1.getText());
-        else if (ProfileActivity.state == 2)
-            profileUserText.setText(ProfileActivity.profile2.getText());
-        else if (ProfileActivity.state == 3)
-            profileUserText.setText(ProfileActivity.profile3.getText());
+        if (ProfileActivity.state == 1) {
+            String btnText = ProfileActivity.profile1.getText().toString();
+            editor.putString("profile1", btnText);
+            editor.apply();
+            editor.commit();
+        }
+        else if (ProfileActivity.state == 2){
+            String btnText = ProfileActivity.profile2.getText().toString();
+            editor.putString("profile2", btnText);
+            editor.apply();
+            editor.commit();
+        }
+        else if (ProfileActivity.state == 3) {
+            String btnText = ProfileActivity.profile3.getText().toString();
+            editor.putString("profile3", btnText);
+            editor.apply();
+            editor.commit();
+        }
 
         profileUserText.addTextChangedListener(new TextWatcher() {
             @Override

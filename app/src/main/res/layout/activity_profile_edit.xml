@@ -53,14 +53,12 @@
         android:layout_height="18dp"
         android:layout_marginBottom="8dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="0dp"
         android:text="Change Profile Name:"
         android:textAppearance="@style/TextAppearance.AppCompat.Button"
         app:layout_constraintBottom_toBottomOf="@+id/profileUserText"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profileEditTitle"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.961" />
 
     <TextView
         android:id="@+id/profileEditTitle"

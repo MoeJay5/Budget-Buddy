@@ -24,6 +24,11 @@ public class SectionsPagerAdapter extends FragmentPagerAdapter {
         super(fm);
     }
 
+    public void addFragment(Fragment fragment, String title) {
+        FRAGMENT_LIST.add(fragment);
+        FRAGMENT_TITLE_LIST.add(title);
+    }
+
     @Override
     public Fragment getItem(int position) {
         // getItem is called to instantiate the fragment for the given page.

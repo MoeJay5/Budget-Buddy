@@ -25,30 +25,11 @@ public class ProfileEvent extends AppCompatActivity { //Profile Objects
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
 
-        SharedPreferences sharedProfiles = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedProfiles.edit();
+        SharedPreferences sharedProfiles = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE); //Where data for profiles is saved
+        SharedPreferences.Editor editor = sharedProfiles.edit(); //Data editor
 
         profileUserText = (EditText) findViewById(R.id.profileUserText);
         addProfileBtn = (ImageButton) findViewById(R.id.addProfileSelect);
-
-        if (ProfileActivity.state == 1) {
-            String btnText = sharedProfiles.getString("profile1", "No name defined");//"No name defined" is the default value.
-            editor.putString("profile1", btnText);
-            editor.apply();
-            editor.commit();
-        }
-        else if (ProfileActivity.state == 2){
-            String btnText = sharedProfiles.getString("profile2", "No name defined");//"No name defined" is the default value.
-            editor.putString("profile2", btnText);
-            editor.apply();
-            editor.commit();
-        }
-        else if (ProfileActivity.state == 3) {
-            String btnText = sharedProfiles.getString("profile3", "No name defined");//"No name defined" is the default value.
-            editor.putString("profile3", btnText);
-            editor.apply();
-            editor.commit();
-        }
 
         profileUserText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -60,7 +41,6 @@ public class ProfileEvent extends AppCompatActivity { //Profile Objects
                     addProfileBtn.setVisibility(View.INVISIBLE);
                 else {
                     addProfileBtn.setVisibility(View.VISIBLE);
-
                 }
             }
 
@@ -74,11 +54,11 @@ public class ProfileEvent extends AppCompatActivity { //Profile Objects
                         SharedPreferences sharedProfiles = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedProfiles.edit();
                         if (ProfileActivity.state == 1)
-                            editor.putString("profile1", profileUserText.getText().toString());
+                            editor.putString("profile1", profileUserText.getText().toString()); //Saving user input to data
                         else if (ProfileActivity.state == 2)
-                            editor.putString("profile2", profileUserText.getText().toString());
+                            editor.putString("profile2", profileUserText.getText().toString()); //Saving user input to data
                         else if (ProfileActivity.state == 3)
-                            editor.putString("profile3", profileUserText.getText().toString());
+                            editor.putString("profile3", profileUserText.getText().toString()); //Saving user input to data
                         editor.apply();
                         editor.commit();
                         Intent intent = new Intent(getApplicationContext(),  ProfileActivity.class);

@@ -20,13 +20,13 @@ public class ProfileActivity extends AppCompatActivity{ //profile selection logi
         SharedPreferences profiles = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
 
         profile1 = (Button) findViewById(R.id.profileButton1);
-        profile1.setText(profiles.getString("profile1", "Profile 1" ));
+        profile1.setText(profiles.getString("profile1", "Profile 1" )); //Calling from saved data, if non exist then return "Profile 1"
 
         profile2 = (Button) findViewById(R.id.profileButton2);
-        profile2.setText(profiles.getString("profile2", "Profile 2" ));
+        profile2.setText(profiles.getString("profile2", "Profile 2" )); //Calling from saved data, if non exist then return "Profile 2"
 
         profile3 = (Button) findViewById(R.id.profileButton3);
-        profile3.setText(profiles.getString("profile3", "Profile 3" ));
+        profile3.setText(profiles.getString("profile3", "Profile 3" )); //Calling from saved data, if non exist then return "Profile 3"
 
         ImageButton profile1Edit = (ImageButton) findViewById(R.id.editButton1);
         ImageButton profile2Edit = (ImageButton) findViewById(R.id.editButton2);

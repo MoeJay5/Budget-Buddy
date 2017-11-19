@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import java.io.*;
 
 public class ProfileEvent extends AppCompatActivity { //Profile Objects
 
@@ -38,8 +39,10 @@ public class ProfileEvent extends AppCompatActivity { //Profile Objects
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(profileUserText.length() <= 0 || profileUserText.length() > 20)
                     addProfileBtn.setVisibility(View.INVISIBLE);
-                else
+                else {
                     addProfileBtn.setVisibility(View.VISIBLE);
+
+                }
             }
 
             @Override

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string
+        name="Profile1"
+        >Profile 1</string>
+    <string
+        name="Profile2"
+        >Profile 2</string>
+    <string
+        name="Profile3"
+        >Profile 3</string>
+</resources>

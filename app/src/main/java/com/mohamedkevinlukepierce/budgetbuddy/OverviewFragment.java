@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mohamedkevinlukepierce.budgetbuddy.dummy.DummyContent;
-import com.mohamedkevinlukepierce.budgetbuddy.dummy.DummyContent.DummyItem;
+import com.mohamedkevinlukepierce.budgetbuddy.BudgetContent;
+import com.mohamedkevinlukepierce.budgetbuddy.BudgetContent.BudgetItem;
 
 import java.util.List;
 
@@ -69,7 +69,7 @@ public class OverviewFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(BudgetContent.ITEMS, mListener));
         }
         return view;
     }
@@ -104,6 +104,6 @@ public class OverviewFragment extends Fragment {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(BudgetItem item);
     }
 }

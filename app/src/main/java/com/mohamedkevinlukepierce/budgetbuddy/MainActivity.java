@@ -22,7 +22,7 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
-import com.mohamedkevinlukepierce.budgetbuddy.dummy.DummyContent;
+import com.mohamedkevinlukepierce.budgetbuddy.BudgetContent;
 
 public class MainActivity
         extends AppCompatActivity
@@ -146,10 +146,11 @@ public class MainActivity
         return true;
     }
 
-            @Override
-            public void onListFragmentInteraction(DummyContent.DummyItem item) {
-                
-            }
+    // starts the list fragment for the overview tab
+    @Override
+    public void onListFragmentInteraction(BudgetContent.BudgetItem item) {
+
+    }
 
             /**
      * A placeholder fragment containing a simple view.

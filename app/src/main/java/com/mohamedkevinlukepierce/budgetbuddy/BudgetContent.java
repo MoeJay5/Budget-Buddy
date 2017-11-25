@@ -21,7 +21,7 @@ public class BudgetContent {
      */
     public static final Map<String, BudgetItem> ITEM_MAP = new HashMap<String, BudgetItem>();
 
-    private static final int COUNT = 25;
+    private static final int COUNT = 15;
 
     static {
         // Add some sample items.

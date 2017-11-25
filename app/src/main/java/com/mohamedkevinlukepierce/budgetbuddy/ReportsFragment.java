@@ -12,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 public class ReportsFragment extends Fragment {
-    private static final String TAG = "Overview Fragment";
+    private static final String TAG = "Reports Fragment";
 
     @Nullable
     @Override

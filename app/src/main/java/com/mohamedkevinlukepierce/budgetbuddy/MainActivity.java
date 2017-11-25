@@ -22,7 +22,12 @@ import android.view.ViewGroup;
 
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+import com.mohamedkevinlukepierce.budgetbuddy.dummy.DummyContent;
+
+public class MainActivity
+        extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener, OverviewFragment.OnListFragmentInteractionListener
+        {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -141,8 +146,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+            @Override
+            public void onListFragmentInteraction(DummyContent.DummyItem item) {
+                
+            }
 
-    /**
+            /**
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {

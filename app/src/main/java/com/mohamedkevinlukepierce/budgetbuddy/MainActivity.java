@@ -17,14 +17,19 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mohamedkevinlukepierce.budgetbuddy.BudgetContent;
 
@@ -79,19 +84,33 @@ public class MainActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final EditText editText = new EditText(MainActivity.this);
+                edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setMessage("Enter the ammount")
-                        .setCancelable(false)
+                        .setView(editText)
+                        .setCancelable(true)
                         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 //do things
+
+                                String editTextString = editText.getText().toString();
+                                if (editTextString.isEmpty()) {
+                                    // alert the user with a toast message if the input field is empty
+                                    Toast.makeText(MainActivity.this, "Please enter a number.", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    int editTextInt = Integer.parseInt(editTextString);
+
+                                    BudgetContent.addItem(createBudgetItem(editTextInt));
+                                    overviewFragment.refreshList();
+                                }
+
                             }
                         });
                 AlertDialog alert = builder.create();
                 alert.show();
 
-                BudgetContent.addItem(createBudgetItem(50));
-                overviewFragment.refreshList();
             }
         });
 

@@ -4,6 +4,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ListFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,6 +25,8 @@ import android.widget.TextView;
 
 import com.mohamedkevinlukepierce.budgetbuddy.BudgetContent;
 
+import java.util.List;
+
 public class MainActivity
         extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OverviewFragment.OnListFragmentInteractionListener
@@ -39,6 +42,8 @@ public class MainActivity
      */
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    private OverviewFragment overviewFragment;
+    private ReportsFragment reportsFragment;
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -71,6 +76,7 @@ public class MainActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                overviewFragment.refreshList();
             }
         });
 
@@ -96,8 +102,10 @@ public class MainActivity
 
     private void setupViewPager(ViewPager viewPager) {
         SectionsPagerAdapter adapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OverviewFragment(), "Overview");
-        adapter.addFragment(new ReportsFragment(), "Reports");
+        overviewFragment = new OverviewFragment();
+        reportsFragment = new ReportsFragment();
+        adapter.addFragment(overviewFragment, "Overview");
+        adapter.addFragment(reportsFragment, "Reports");
         viewPager.setAdapter(adapter);
     }
 

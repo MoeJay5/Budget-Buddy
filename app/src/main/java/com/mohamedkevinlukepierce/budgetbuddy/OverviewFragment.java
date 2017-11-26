@@ -3,6 +3,7 @@ package com.mohamedkevinlukepierce.budgetbuddy;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,6 +32,7 @@ public class OverviewFragment extends Fragment {
     private LinearLayoutManager mLinearLayoutManager;
     private DividerItemDecoration mDividerItemDecoration;
     private OnListFragmentInteractionListener mListener;
+    private MyItemRecyclerViewAdapter mMyItemRecyclerViewAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -79,11 +81,15 @@ public class OverviewFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(BudgetContent.ITEMS, mListener));
+            mMyItemRecyclerViewAdapter = new MyItemRecyclerViewAdapter(BudgetContent.ITEMS, mListener);
+            recyclerView.setAdapter(mMyItemRecyclerViewAdapter);
         }
         return view;
     }
 
+    public void refreshList() {
+        mMyItemRecyclerViewAdapter.notifyDataSetChanged();
+    }
 
     @Override
     public void onAttach(Context context) {

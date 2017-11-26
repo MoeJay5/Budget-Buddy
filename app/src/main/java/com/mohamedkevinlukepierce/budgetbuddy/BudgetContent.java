@@ -30,12 +30,12 @@ public class BudgetContent {
         }
     }
 
-    private static void addItem(BudgetItem item) {
+    public static void addItem(BudgetItem item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
     }
 
-    private static BudgetItem createBudgetItem(int position) {
+    public static BudgetItem createBudgetItem(int position) {
         return new BudgetItem(String.valueOf(position), "Item " + position, makeDetails(position));
     }
 

@@ -27,6 +27,8 @@ import com.mohamedkevinlukepierce.budgetbuddy.BudgetContent;
 
 import java.util.List;
 
+import static com.mohamedkevinlukepierce.budgetbuddy.BudgetContent.createBudgetItem;
+
 public class MainActivity
         extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, OverviewFragment.OnListFragmentInteractionListener
@@ -76,6 +78,7 @@ public class MainActivity
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                BudgetContent.addItem(createBudgetItem(50));
                 overviewFragment.refreshList();
             }
         });

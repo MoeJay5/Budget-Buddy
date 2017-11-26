@@ -1,5 +1,6 @@
 package com.mohamedkevinlukepierce.budgetbuddy;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.content.SharedPreferences;
 import android.support.v4.content.ContextCompat;
@@ -23,7 +24,8 @@ public class LoginActivity extends AppCompatActivity{
         @Override
         public void onComplete(String pin){
             if(pin.equals(pins.getString(String.format("pin%d", ProfileActivity.state), "1234"))){
-                //change activity to whatever it should be after logging in
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
             else{//wrong PIN entered
                 mPinLockView.resetPinLockView();//clears the currently entered PIN and resets the indicator dots

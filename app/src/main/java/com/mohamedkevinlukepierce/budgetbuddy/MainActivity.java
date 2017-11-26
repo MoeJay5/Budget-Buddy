@@ -6,6 +6,7 @@ import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ListFragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -91,6 +92,8 @@ public class MainActivity
                 final EditText editTextValue = new EditText(MainActivity.this);
                 final EditText editTextName = new EditText(MainActivity.this);
                 editTextValue.setInputType(InputType.TYPE_CLASS_NUMBER);
+                editTextName.setHint("Enter name of item");
+                editTextValue.setHint("Enter amount");
                 editTextValue.setGravity(Gravity.CENTER_HORIZONTAL);
                 editTextName.setGravity(Gravity.CENTER_HORIZONTAL);
                 layout.addView(editTextName);

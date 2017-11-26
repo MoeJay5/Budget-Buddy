@@ -85,7 +85,7 @@ public class MainActivity
             @Override
             public void onClick(View view) {
                 final EditText editText = new EditText(MainActivity.this);
-                edittext.setInputType(InputType.TYPE_CLASS_NUMBER);
+                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setMessage("Enter the ammount")
                         .setView(editText)

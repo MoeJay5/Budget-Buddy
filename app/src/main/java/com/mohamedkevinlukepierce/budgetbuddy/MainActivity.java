@@ -18,8 +18,10 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -28,6 +30,7 @@ import android.view.ViewGroup;
 
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -84,25 +87,34 @@ public class MainActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final EditText editText = new EditText(MainActivity.this);
-                editText.setInputType(InputType.TYPE_CLASS_NUMBER);
+                LinearLayout layout = new LinearLayout(MainActivity.this);
+                final EditText editTextValue = new EditText(MainActivity.this);
+                final EditText editTextName = new EditText(MainActivity.this);
+                editTextValue.setInputType(InputType.TYPE_CLASS_NUMBER);
+                editTextValue.setGravity(Gravity.CENTER_HORIZONTAL);
+                editTextName.setGravity(Gravity.CENTER_HORIZONTAL);
+                layout.addView(editTextName);
+                layout.addView(editTextValue);
+                layout.setOrientation(LinearLayout.VERTICAL);
+                layout.setGravity(Gravity.CENTER_HORIZONTAL);
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setMessage("Enter the ammount")
-                        .setView(editText)
+                builder.setMessage("Enter the amount")
+                        .setView(layout)
                         .setCancelable(true)
                         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 //do things
 
-                                String editTextString = editText.getText().toString();
-                                if (editTextString.isEmpty()) {
+                                String stringName = editTextName.getText().toString();
+                                String stringValue = editTextValue.getText().toString();
+                                if (stringValue.isEmpty()) {
                                     // alert the user with a toast message if the input field is empty
                                     Toast.makeText(MainActivity.this, "Please enter a number.", Toast.LENGTH_SHORT).show();
                                 }
                                 else {
-                                    int editTextInt = Integer.parseInt(editTextString);
+                                    int intValue = Integer.parseInt(stringValue);
 
-                                    BudgetContent.addItem(createBudgetItem(editTextInt));
+                                    BudgetContent.addItem(createBudgetItem(stringName, intValue));
                                     overviewFragment.refreshList();
                                 }
 

@@ -12,47 +12,36 @@ import java.util.Map;
 public class BudgetContent {
 
     /**
-     * An array of sample (dummy) items.
+     * An array of budget items.
      */
     public static final List<BudgetItem> ITEMS = new ArrayList<BudgetItem>();
 
     /**
-     * A map of sample (dummy) items, by ID.
+     * A map of budget items, by ID.
      */
     public static final Map<String, BudgetItem> ITEM_MAP = new HashMap<String, BudgetItem>();
-
-    private static final int COUNT = 15;
 
     public static void addItem(BudgetItem item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
     }
 
-    public static BudgetItem createBudgetItem(int position) {
-        return new BudgetItem(String.valueOf(position), "Item " + position, makeDetails(position));
-    }
-
-    private static String makeDetails(int position) {
-        StringBuilder builder = new StringBuilder();
-        builder.append("Details about Item: ").append(position);
-        for (int i = 0; i < position; i++) {
-            builder.append("\nMore details information here.");
-        }
-        return builder.toString();
+    public static BudgetItem createBudgetItem(String name, int value) {
+        return new BudgetItem(String.valueOf(name), name, value);
     }
 
     /**
-     * A dummy item representing a piece of content.
+     * budget item that contains information about an entry.
      */
     public static class BudgetItem {
         public final String id;
         public final String content;
-        public final String details;
+        public final int value;
 
-        public BudgetItem(String id, String content, String details) {
+        public BudgetItem(String id, String name, int value) {
             this.id = id;
-            this.content = content;
-            this.details = details;
+            this.content = name;
+            this.value = value;
         }
 
         @Override

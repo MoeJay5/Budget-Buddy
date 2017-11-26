@@ -23,13 +23,6 @@ public class BudgetContent {
 
     private static final int COUNT = 15;
 
-    static {
-        // Add some sample items.
-        for (int i = 1; i <= COUNT; i++) {
-            addItem(createBudgetItem(i));
-        }
-    }
-
     public static void addItem(BudgetItem item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);

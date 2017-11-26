@@ -1,5 +1,7 @@
 package com.mohamedkevinlukepierce.budgetbuddy;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -21,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.mohamedkevinlukepierce.budgetbuddy.BudgetContent;
@@ -76,8 +79,17 @@ public class MainActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setMessage("Enter the ammount")
+                        .setCancelable(false)
+                        .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                //do things
+                            }
+                        });
+                AlertDialog alert = builder.create();
+                alert.show();
+
                 BudgetContent.addItem(createBudgetItem(50));
                 overviewFragment.refreshList();
             }

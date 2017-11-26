@@ -3,6 +3,7 @@ package com.mohamedkevinlukepierce.budgetbuddy;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +28,8 @@ public class OverviewFragment extends Fragment {
     private static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
     private int mColumnCount = 1;
+    private LinearLayoutManager mLinearLayoutManager;
+    private DividerItemDecoration mDividerItemDecoration;
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -65,7 +68,14 @@ public class OverviewFragment extends Fragment {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
             if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
+                mLinearLayoutManager = new LinearLayoutManager(context);
+                recyclerView.setLayoutManager(mLinearLayoutManager);
+                
+                //adds dividers between the elements
+                mDividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                        mLinearLayoutManager.getOrientation());
+                recyclerView.addItemDecoration(mDividerItemDecoration);
+
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }

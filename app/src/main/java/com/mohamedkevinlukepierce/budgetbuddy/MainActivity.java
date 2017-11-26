@@ -112,9 +112,7 @@ public class MainActivity
                                     Toast.makeText(MainActivity.this, "Please enter a number.", Toast.LENGTH_SHORT).show();
                                 }
                                 else {
-                                    int intValue = Integer.parseInt(stringValue);
-
-                                    BudgetContent.addItem(createBudgetItem(stringName, intValue));
+                                    BudgetContent.addItem(createBudgetItem(stringName, stringValue));
                                     overviewFragment.refreshList();
                                 }
 

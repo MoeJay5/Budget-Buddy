@@ -26,7 +26,7 @@ public class BudgetContent {
         ITEM_MAP.put(item.id, item);
     }
 
-    public static BudgetItem createBudgetItem(String name, int value) {
+    public static BudgetItem createBudgetItem(String name, String value) {
         return new BudgetItem(String.valueOf(name), name, value);
     }
 
@@ -35,18 +35,18 @@ public class BudgetContent {
      */
     public static class BudgetItem {
         public final String id;
-        public final String content;
-        public final int value;
+        public final String name;
+        public final String value;
 
-        public BudgetItem(String id, String name, int value) {
+        public BudgetItem(String id, String name, String value) {
             this.id = id;
-            this.content = name;
+            this.name = name;
             this.value = value;
         }
 
         @Override
         public String toString() {
-            return content;
+            return name;
         }
     }
 }

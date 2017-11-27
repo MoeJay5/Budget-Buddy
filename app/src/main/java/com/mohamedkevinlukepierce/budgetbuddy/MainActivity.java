@@ -247,8 +247,7 @@ public class MainActivity
     public void onListFragmentInteraction(BudgetContent.BudgetItem item) {
 
     }
-
-            /**
+    /**
      * A placeholder fragment containing a simple view.
      */
     public static class PlaceholderFragment extends Fragment {

@@ -21,9 +21,12 @@ public class BudgetContent {
      */
     public static final Map<String, BudgetItem> ITEM_MAP = new HashMap<String, BudgetItem>();
 
+    public static float totalBudget;
+
     public static void addItem(BudgetItem item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
+        totalBudget += Integer.parseInt(item.value);
     }
 
     public static BudgetItem createBudgetItem(String name, String value, String type) {
@@ -42,8 +45,17 @@ public class BudgetContent {
         public BudgetItem(String id, String name, String value, String type) {
             this.id = id;
             this.name = name;
-            this.value = value;
+            if (type.equals("expense")) {
+                this.value = "-" + value;
+            }
+            else {
+                this.value = value;
+            }
             this.type = type;
+        }
+
+        public String getType() {
+            return this.type;
         }
 
         @Override

@@ -1,5 +1,6 @@
 package com.mohamedkevinlukepierce.budgetbuddy;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +38,16 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).name);
-        holder.mContentView.setText("$" + mValues.get(position).value);
+        int valueOfItem = Integer.parseInt(mValues.get(position).value);
+        String valueStr;
+        if (valueOfItem < 0) {
+            valueOfItem = Math.abs(valueOfItem);
+            valueStr = "- $" + valueOfItem;
+        }
+        else {
+            valueStr = "$" + valueOfItem;
+        }
+        holder.mContentView.setText(valueStr);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

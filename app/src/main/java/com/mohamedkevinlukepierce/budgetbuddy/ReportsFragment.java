@@ -6,20 +6,18 @@ package com.mohamedkevinlukepierce.budgetbuddy;
  */
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.support.annotation.ColorInt;
-import android.support.annotation.ColorLong;
-import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
@@ -30,7 +28,7 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.util.ArrayList;
 
-import static java.lang.Integer.parseInt;
+
 
 public class ReportsFragment extends Fragment {
 
@@ -40,12 +38,14 @@ public class ReportsFragment extends Fragment {
     private String[] xData = {"Budget Remaining", "Spent this month"};
     PieChart pieChart;
 
+    private Snackbar infoBar;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        View view = inflater.inflate(R.layout.reports_fragment, container, false);
+        final View view = inflater.inflate(R.layout.reports_fragment, container, false);
 
         Log.d(TAG, "onCreate: starting to create chart");
         pieChart = (PieChart) view.findViewById(R.id.idPieChart);
@@ -54,10 +54,15 @@ public class ReportsFragment extends Fragment {
         pieChart.setTransparentCircleAlpha(0);
         pieChart.setDescription(null);
 
-
         addDataSet();
 
         pieChart.setOnChartValueSelectedListener(new OnChartValueSelectedListener() {
+
+            @Override
+            public void onNothingSelected() {
+
+            }
+
             @Override
             public void onValueSelected(Entry e, Highlight h) {
                 Log.d(TAG, "onValueSelected: Value select from chart.");
@@ -65,23 +70,24 @@ public class ReportsFragment extends Fragment {
                 Log.d(TAG, "onValueSelected: " + h.toString());
 
                 int pos1 = e.toString().indexOf("y: ");
-                String sales = e.toString();
-                sales = sales.substring(pos1 + 3, sales.length()-2);
+                String percentage = e.toString();
+                percentage = percentage.substring(pos1 + 3, percentage.length()-2);
 
                 for (int i = 0; i < yData.length; i++) {
-                    if (yData[i] == Integer.parseInt(sales)) {
+                    if (yData[i] == Integer.parseInt(percentage)) {
                         pos1 = i;
                         break;
                     }
                 }
-                String employee = xData[pos1];
-                Toast.makeText(getActivity(), employee + "\n" +  sales + "%", Toast.LENGTH_LONG).show();
+                String fieldName = xData[pos1];
+
+                infoBar = Snackbar.make(view, fieldName + "\n" +  percentage + "%", Snackbar.LENGTH_LONG);
+                TextView snackBarTextView = (TextView) infoBar.getView().findViewById( android.support.design.R.id.snackbar_text );
+                snackBarTextView.setTextSize( 24 );
+                snackBarTextView.setTypeface(snackBarTextView.getTypeface(), Typeface.BOLD);
+                infoBar.show();
             }
 
-            @Override
-            public void onNothingSelected() {
-
-            }
         });
         return view;
     }
@@ -101,10 +107,15 @@ public class ReportsFragment extends Fragment {
         }
 
         //create the data set
-        PieDataSet pieDataSet = new PieDataSet(yEntrys, "Legend");
+        PieDataSet pieDataSet = new PieDataSet(yEntrys, null);
         pieDataSet.setSliceSpace(2);
-        pieDataSet.setValueTextSize(24);
+        pieDataSet.setValueTextSize(32);
+        pieDataSet.setValueTypeface(Typeface.DEFAULT_BOLD);
+        pieDataSet.setDrawIcons(true);
         pieDataSet.setValueTextColor(Color.WHITE);
+
+        Legend legend = pieChart.getLegend();
+        legend.setFormSize(0);
 
         //add colors to dataset
         ArrayList<Integer> colors = new ArrayList<>();
@@ -114,19 +125,12 @@ public class ReportsFragment extends Fragment {
 
         pieDataSet.setColors(colors);
 
-        //add legend to chart
-        Legend legend = pieChart.getLegend();
-        legend.setForm(Legend.LegendForm.CIRCLE);
-        legend.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
-        legend.setTextSize(24);
-
         //create pie data object
         PieData pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
         pieChart.invalidate();
         pieChart.setRotationEnabled(false);
     }
-
 }
 
 

@@ -1,6 +1,7 @@
 package com.mohamedkevinlukepierce.budgetbuddy;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,9 +18,16 @@ import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -116,17 +124,21 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         super.onRestart();
         finish();
         startActivity(getIntent());
+
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         sharedPreferences = getSharedPreferences(ProfileActivity.SHARED_PREFS, MODE_PRIVATE);
         editor = sharedPreferences.edit();
+
+
         if(sharedPreferences.getBoolean("darkThemeEnabled", false))
             setTheme(R.style.AppTheme_Dark);
 
         super.onCreate(savedInstanceState);
         setupActionBar();
+
 
     }
     //<--- MY CODE
@@ -184,16 +196,34 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
             //MY CODE --->
             Preference darkThemePref = (Preference) findPreference("darkThemeCheck");
+            Preference pin = (Preference) findPreference("SetPIN");
 
             darkThemePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
-                public boolean onPreferenceChange(Preference preference, Object o) {
-                    editor.putBoolean("darkThemeEnabled", (boolean) o);
+                public boolean onPreferenceChange(Preference preference, Object input) {
+                    editor.putBoolean("darkThemeEnabled", (boolean) input);
                     editor.apply();
-                    startActivity(getActivity().getIntent().setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));; //Refreshes layout
+                    startActivity(getActivity().getIntent().setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)); //Refreshes layout
                     return true;
                 }
             });
+
+            pin.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object input) {
+                    if (input.toString().length() == 4) {
+                        editor.putString(String.format("pin%d", ProfileActivity.state), (String) input);
+                        editor.apply();
+                        Toast.makeText(getActivity(),"PIN successfully changed!", Toast.LENGTH_LONG ).show();
+                    }
+                    else
+                        Toast.makeText(getActivity(),"PIN must be 4 digits.", Toast.LENGTH_LONG ).show();
+
+                    return true;
+                }
+            });
+
+            // Clears input for next PIN change.
             //<--- MY CODE
 
 

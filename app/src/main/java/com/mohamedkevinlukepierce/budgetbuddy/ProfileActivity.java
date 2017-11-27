@@ -3,14 +3,9 @@ package com.mohamedkevinlukepierce.budgetbuddy;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceManager;
-import android.preference.SwitchPreference;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.Switch;
 
 public class ProfileActivity extends AppCompatActivity{ //profile selection logic
     public static Button profile1, profile2, profile3;
@@ -74,7 +69,7 @@ public class ProfileActivity extends AppCompatActivity{ //profile selection logi
     {
         SharedPreferences savedPreference = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         Intent intent;
-        if(savedPreference.getString(String.format("pin%d", loginState), "null") == "null") //If PIN non existent then skip to Main Activity
+        if(savedPreference.getString(String.format("pin%d", loginState), "null") == "null" || savedPreference.getString(String.format("pin%d", loginState), "null") == "") //If PIN non existent then skip to Main Activity
             intent = new Intent(getApplicationContext(), SettingsActivity.class);
         else
             intent = new Intent(getApplicationContext(), LoginActivity.class);

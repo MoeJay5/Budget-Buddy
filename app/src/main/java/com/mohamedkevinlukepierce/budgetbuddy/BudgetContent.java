@@ -21,12 +21,25 @@ public class BudgetContent {
      */
     public static final Map<String, BudgetItem> ITEM_MAP = new HashMap<String, BudgetItem>();
 
-    public static float totalBudget;
+    private static float totalBudget;
+    private static float totalExpense;
+
+    public static float getTotalBudget() {
+        return totalBudget;
+    }
+
+    public static float getTotalExpense() {
+        return totalExpense;
+    }
 
     public static void addItem(BudgetItem item) {
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
-        totalBudget += Integer.parseInt(item.value);
+        int itemValue = Integer.parseInt(item.value);
+        totalBudget += itemValue;
+        if (itemValue < 0) {
+            totalExpense += (-1) * itemValue;
+        }
     }
 
     public static BudgetItem createBudgetItem(String name, String value, String type) {
@@ -57,6 +70,7 @@ public class BudgetContent {
         public String getType() {
             return this.type;
         }
+
 
         @Override
         public String toString() {

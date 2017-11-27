@@ -25,8 +25,10 @@ import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-
+import static com.mohamedkevinlukepierce.budgetbuddy.BudgetContent.getTotalBudget;
+import static com.mohamedkevinlukepierce.budgetbuddy.BudgetContent.getTotalExpense;
 import java.util.ArrayList;
+
 
 
 
@@ -34,11 +36,12 @@ public class ReportsFragment extends Fragment {
 
     private static final String TAG = "Reports Fragment";
 
-    private int[] yData = {75, 25};
+    private float[] yData = {(int) 0, 0};
     private String[] xData = {"Budget Remaining", "Spent this month"};
     PieChart pieChart;
 
     private Snackbar infoBar;
+
 
     @Nullable
     @Override
@@ -74,14 +77,24 @@ public class ReportsFragment extends Fragment {
                 percentage = percentage.substring(pos1 + 3, percentage.length()-2);
 
                 for (int i = 0; i < yData.length; i++) {
-                    if (yData[i] == Integer.parseInt(percentage)) {
+                    if (Math.abs(yData[i] - Float.parseFloat(percentage)) < 1) {
                         pos1 = i;
                         break;
                     }
                 }
                 String fieldName = xData[pos1];
-
-                infoBar = Snackbar.make(view, fieldName + "\n" +  percentage + "%", Snackbar.LENGTH_LONG);
+                float fieldValue;
+                if (pos1 == 0) {
+                    fieldValue = getTotalBudget();
+                }
+                else {
+                    fieldValue = getTotalExpense();
+                }
+                String overBudgetWarning = "";
+                if (getTotalBudget() < getTotalExpense()) {
+                    overBudgetWarning += " ($" + (getTotalExpense() - getTotalBudget()) + " Over budget!)";
+                }
+                infoBar = Snackbar.make(view, fieldName + "\n$" + fieldValue + overBudgetWarning, Snackbar.LENGTH_LONG);
                 TextView snackBarTextView = (TextView) infoBar.getView().findViewById( android.support.design.R.id.snackbar_text );
                 snackBarTextView.setTextSize( 24 );
                 snackBarTextView.setTypeface(snackBarTextView.getTypeface(), Typeface.BOLD);
@@ -90,6 +103,22 @@ public class ReportsFragment extends Fragment {
 
         });
         return view;
+    }
+
+    public void refreshPie() {
+        float budget = getTotalBudget();
+        float expense = getTotalExpense();
+        if (budget >= expense) {
+            yData[0] = (budget * 100 / (expense + budget));
+            yData[1] = (expense * 100 / (expense + budget));
+        }
+        else {
+            yData[0] = 0;
+            yData[1] = 100;
+        }
+        pieChart.notifyDataSetChanged();
+        pieChart.invalidate();
+        addDataSet();
     }
 
 
@@ -113,6 +142,11 @@ public class ReportsFragment extends Fragment {
         pieDataSet.setValueTypeface(Typeface.DEFAULT_BOLD);
         pieDataSet.setDrawIcons(true);
         pieDataSet.setValueTextColor(Color.WHITE);
+
+        // hides the value numbers if only one slice
+        if (yData[0] == 0 || yData [1] == 0) {
+            pieDataSet.setDrawValues(false);
+        }
 
         Legend legend = pieChart.getLegend();
         legend.setFormSize(0);

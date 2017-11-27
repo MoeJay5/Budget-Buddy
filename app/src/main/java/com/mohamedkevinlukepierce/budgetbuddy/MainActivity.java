@@ -161,6 +161,7 @@ public class MainActivity
                         else {
                             BudgetContent.addItem(createBudgetItem(stringName, stringValue, type));
                             overviewFragment.refreshList();
+                            reportsFragment.refreshPie();
                             Toast.makeText(MainActivity.this, stringName + " was added to your list.", Toast.LENGTH_SHORT).show();
 
                         }

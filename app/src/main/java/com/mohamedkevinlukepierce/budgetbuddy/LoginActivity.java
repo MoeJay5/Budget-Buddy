@@ -60,8 +60,9 @@ public class LoginActivity extends AppCompatActivity{
 
             }
 
+            //this method has to be overridden, just ignore it
             @Override
-            public void onEmpty(){}//this method has to be overridden, just ignore it
+            public void onEmpty(){}
 
             @Override
             public void onPinChange(int pinLength, String intermediatePin){

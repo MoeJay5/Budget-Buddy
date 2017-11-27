@@ -111,6 +111,29 @@ public class MainActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                if (tab.getText().equals("Reports")) {
+                    reportsFragment.refreshPie();
+                    reportsFragment.animation();
+                }
+                if (tab.getText().equals("Overview")) {
+                    reportsFragment.hidePie();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
     }
 
     // method to add an item to the overview list
@@ -162,6 +185,7 @@ public class MainActivity
                             BudgetContent.addItem(createBudgetItem(stringName, stringValue, type));
                             overviewFragment.refreshList();
                             reportsFragment.refreshPie();
+                            reportsFragment.animation();
                             Toast.makeText(MainActivity.this, stringName + " was added to your list.", Toast.LENGTH_SHORT).show();
 
                         }

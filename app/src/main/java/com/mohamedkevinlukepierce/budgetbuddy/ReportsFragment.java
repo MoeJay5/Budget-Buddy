@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -121,6 +122,18 @@ public class ReportsFragment extends Fragment {
         addDataSet();
     }
 
+    public void animation() {
+        pieChart.animateY(800, Easing.EasingOption.EaseInOutQuad);
+    }
+
+    public void hidePie() {
+        pieChart.clearAnimation();
+        yData[0] = 0;
+        yData[1] = 0;
+        pieChart.notifyDataSetChanged();
+        pieChart.invalidate();
+        addDataSet();
+    }
 
     private void addDataSet() {
         Log.d(TAG, "addDataSet started");

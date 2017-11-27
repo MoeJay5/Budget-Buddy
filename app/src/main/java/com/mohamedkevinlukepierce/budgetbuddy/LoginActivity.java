@@ -28,9 +28,9 @@ public class LoginActivity extends AppCompatActivity{
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
-        final SharedPreferences savedPreference = getSharedPreferences(ProfileActivity.SHARED_PREFS, MODE_PRIVATE);
+        final SharedPreferences generalSharedPreference = getSharedPreferences("General Preference", MODE_PRIVATE);
 
-        if(savedPreference.getBoolean("darkThemeEnabled", false))
+        if(generalSharedPreference.getBoolean("darkThemeEnabled", false))
             setTheme(R.style.AppTheme_Dark);
 
         super.onCreate(savedInstanceState);
@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity{
 
             @Override
             public void onComplete(String pin){
-                if(pin.equals(savedPreference.getString(String.format("pin%d", ProfileActivity.state), "null"))){
+                if(pin.equals(generalSharedPreference.getString(String.format("pin%d", ProfileActivity.state), "null"))){
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 }

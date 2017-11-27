@@ -3,6 +3,7 @@ package com.mohamedkevinlukepierce.budgetbuddy;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 
@@ -65,6 +66,9 @@ public class MainActivity
     private OverviewFragment overviewFragment;
     private ReportsFragment reportsFragment;
     private Intent intent;
+    private static SharedPreferences generalSharedPreferences;
+    private static SharedPreferences.Editor generalEditor;
+
     /**
      * The {@link ViewPager} that will host the section contents.
      */
@@ -79,6 +83,12 @@ public class MainActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        generalSharedPreferences = getSharedPreferences("General Preference", MODE_PRIVATE);
+        generalEditor = generalSharedPreferences.edit();
+
+        if(generalSharedPreferences.getBoolean("darkThemeEnabled", false))
+            setTheme(R.style.AppTheme_Dark_NoActionBar);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

@@ -36,7 +36,7 @@ import java.util.List;
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
-    private static SharedPreferences sharedPreferences;
+    private static SharedPreferences generalSharedPreferences;
     private static SharedPreferences.Editor editor;
 
     /**
@@ -124,10 +124,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     //Initializes objects and checks for theme state
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        sharedPreferences = getSharedPreferences(ProfileActivity.SHARED_PREFS, MODE_PRIVATE);
-        editor = sharedPreferences.edit();
+        generalSharedPreferences = getSharedPreferences("General Preference", MODE_PRIVATE);
+        editor = generalSharedPreferences.edit();
 
-        if(sharedPreferences.getBoolean("darkThemeEnabled", false))
+        if(generalSharedPreferences.getBoolean("darkThemeEnabled", false))
             setTheme(R.style.AppTheme_Dark);
 
         super.onCreate(savedInstanceState);

@@ -7,6 +7,9 @@ package com.mohamedkevinlukepierce.budgetbuddy;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.ColorInt;
+import android.support.annotation.ColorLong;
+import android.support.annotation.ColorRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -27,12 +30,14 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.util.ArrayList;
 
+import static java.lang.Integer.parseInt;
+
 public class ReportsFragment extends Fragment {
 
     private static final String TAG = "Reports Fragment";
 
-    private float[] yData = {25.3f, 10.6f, 66.76f, 44.32f, 46.01f, 16.89f, 23.9f};
-    private String[] xData = {"Mitch", "Jessica", "Mohammad", "Kelsey", "Sam", "Robert", "Ashley"};
+    private int[] yData = {75, 25};
+    private String[] xData = {"Budget Remaining", "Spent this month"};
     PieChart pieChart;
 
     @Nullable
@@ -44,14 +49,10 @@ public class ReportsFragment extends Fragment {
 
         Log.d(TAG, "onCreate: starting to create chart");
         pieChart = (PieChart) view.findViewById(R.id.idPieChart);
-        Description mDescription = new Description();
-        mDescription.setText("Sales by employee (In Thousands $) ");
-        pieChart.setDescription(mDescription);
         pieChart.setRotationEnabled(true);
         pieChart.setHoleRadius(25f);
         pieChart.setTransparentCircleAlpha(0);
-        pieChart.setCenterText("Super Cool Chart");
-        pieChart.setCenterTextSize(10);
+        pieChart.setDescription(null);
 
 
         addDataSet();
@@ -63,17 +64,18 @@ public class ReportsFragment extends Fragment {
                 Log.d(TAG, "onValueSelected: " + e.toString());
                 Log.d(TAG, "onValueSelected: " + h.toString());
 
-                int pos1 = e.toString().indexOf("(sum): ");
-                String sales = e.toString().substring(pos1 + 7);
+                int pos1 = e.toString().indexOf("y: ");
+                String sales = e.toString();
+                sales = sales.substring(pos1 + 3, sales.length()-2);
 
                 for (int i = 0; i < yData.length; i++) {
-                    if (yData[i] == Float.parseFloat(sales)) {
+                    if (yData[i] == Integer.parseInt(sales)) {
                         pos1 = i;
                         break;
                     }
                 }
-                String employee = xData[pos1 + 1];
-                Toast.makeText(getActivity(), "Employee " + employee + "\n" + "Sales: $" + sales + "K", Toast.LENGTH_LONG).show();
+                String employee = xData[pos1];
+                Toast.makeText(getActivity(), employee + "\n" +  sales + "%", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -99,31 +101,30 @@ public class ReportsFragment extends Fragment {
         }
 
         //create the data set
-        PieDataSet pieDataSet = new PieDataSet(yEntrys, "Employee Sales");
+        PieDataSet pieDataSet = new PieDataSet(yEntrys, "Legend");
         pieDataSet.setSliceSpace(2);
-        pieDataSet.setValueTextSize(12);
+        pieDataSet.setValueTextSize(24);
+        pieDataSet.setValueTextColor(Color.WHITE);
 
         //add colors to dataset
         ArrayList<Integer> colors = new ArrayList<>();
-        colors.add(Color.GRAY);
-        colors.add(Color.BLUE);
-        colors.add(Color.RED);
-        colors.add(Color.GREEN);
-        colors.add(Color.CYAN);
-        colors.add(Color.YELLOW);
-        colors.add(Color.MAGENTA);
+        colors.add(Color.argb(255, 102, 187, 106));
+        colors.add(Color.argb(255, 239, 83, 80));
+
 
         pieDataSet.setColors(colors);
 
         //add legend to chart
         Legend legend = pieChart.getLegend();
         legend.setForm(Legend.LegendForm.CIRCLE);
-        legend.setPosition(Legend.LegendPosition.LEFT_OF_CHART);
+        legend.setPosition(Legend.LegendPosition.BELOW_CHART_CENTER);
+        legend.setTextSize(24);
 
         //create pie data object
         PieData pieData = new PieData(pieDataSet);
         pieChart.setData(pieData);
         pieChart.invalidate();
+        pieChart.setRotationEnabled(false);
     }
 
 }

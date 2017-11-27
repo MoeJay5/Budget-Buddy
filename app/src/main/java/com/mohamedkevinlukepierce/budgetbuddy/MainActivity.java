@@ -142,13 +142,11 @@ public class MainActivity
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-
+                                // do nothing when canceled
                             }
                         });
-
                 AlertDialog alert = builder.create();
                 alert.show();
-
             }
         });
 

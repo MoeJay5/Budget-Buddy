@@ -73,16 +73,10 @@ public class ReportsFragment extends Fragment {
                 Log.d(TAG, "onValueSelected: " + e.toString());
                 Log.d(TAG, "onValueSelected: " + h.toString());
 
-                int pos1 = e.toString().indexOf("y: ");
-                String percentage = e.toString();
-                percentage = percentage.substring(pos1 + 3, percentage.length()-2);
+                // pos1 is the index of the selected element
+                int pos1 = h.toString().indexOf("x: ");
+                pos1 = Integer.parseInt(h.toString().substring(pos1 + 3, pos1 + 4));
 
-                for (int i = 0; i < yData.length; i++) {
-                    if (Math.abs(yData[i] - Float.parseFloat(percentage)) < 1) {
-                        pos1 = i;
-                        break;
-                    }
-                }
                 String fieldName = xData[pos1];
                 float fieldValue;
                 if (pos1 == 0) {

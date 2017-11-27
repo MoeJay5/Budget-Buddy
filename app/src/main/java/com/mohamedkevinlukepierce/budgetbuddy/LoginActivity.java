@@ -16,14 +16,24 @@ import com.andrognito.pinlockview.PinLockView;
 public class LoginActivity extends AppCompatActivity{
     private PinLockView mPinLockView;
     private IndicatorDots mIndicatorDots;
-    public static final String SHARED_PREFS = "PINs";
     private TextView dynamicText;
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState){
+    public void onRestart() { //When back button is pressed on Android device the layout is refreshed
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
+    @Override
+    protected void onCreate(final Bundle savedInstanceState) {
+        final SharedPreferences savedPreference = getSharedPreferences(ProfileActivity.SHARED_PREFS, MODE_PRIVATE);
+
+        if(savedPreference.getBoolean("darkThemeEnabled", false))
+            setTheme(R.style.AppTheme_Dark);
+
         super.onCreate(savedInstanceState);
-        final SharedPreferences PINS= getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -39,7 +49,7 @@ public class LoginActivity extends AppCompatActivity{
 
             @Override
             public void onComplete(String pin){
-                if(pin.equals(PINS.getString(String.format("pin%d", ProfileActivity.state), "1234"))){
+                if(pin.equals(savedPreference.getString(String.format("pin%d", ProfileActivity.state), "null"))){
                     Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
                     startActivity(intent);
                 }

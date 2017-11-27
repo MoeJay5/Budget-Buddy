@@ -127,11 +127,12 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
         generalSharedPreferences = getSharedPreferences("General Preference", MODE_PRIVATE);
         editor = generalSharedPreferences.edit();
 
-        if(generalSharedPreferences.getBoolean("darkThemeEnabled", false))
+        if(generalSharedPreferences.getBoolean("darkThemeEnabled", false)) {
             setTheme(R.style.AppTheme_Dark);
+        }
 
         super.onCreate(savedInstanceState);
-        setupActionBar();
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -146,16 +147,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
 
     //<---- Code not provided by API
 
-    /**
-     * Set up the {@link android.app.ActionBar}, if the API is available.
-     */
-    private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            // Show the Up button in the action bar.
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
-    }
+
 
     /**
      * {@inheritDoc}

@@ -9,4 +9,8 @@
     <color name="darkColorPrimary">#283593</color>
     <color name="darkColorPrimaryDark">#1a237e</color>
     <color name="darkColorAccent">#218d3c</color>
+
+    <!-- Pin code login -->
+    <color name="black">#000000</color>
+
 </resources>

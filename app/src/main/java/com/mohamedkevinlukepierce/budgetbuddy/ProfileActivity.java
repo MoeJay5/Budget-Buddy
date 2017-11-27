@@ -51,7 +51,9 @@ public class ProfileActivity extends AppCompatActivity{ //profile selection logi
         profile1.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+
+                        state = 1;
+                        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                         startActivity(intent);
                     }
                 }
@@ -59,7 +61,8 @@ public class ProfileActivity extends AppCompatActivity{ //profile selection logi
         profile2.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-                        Intent intent = new Intent(getApplicationContext(),  MainActivity.class);
+                        state = 2;
+                        Intent intent = new Intent(getApplicationContext(),  LoginActivity.class);
                         startActivity(intent);
                     }
                 }
@@ -67,7 +70,8 @@ public class ProfileActivity extends AppCompatActivity{ //profile selection logi
         profile3.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-                        Intent intent = new Intent(getApplicationContext(),  MainActivity.class);
+                        state = 3;
+                        Intent intent = new Intent(getApplicationContext(),  LoginActivity.class);
                         startActivity(intent);
                     }
                 }

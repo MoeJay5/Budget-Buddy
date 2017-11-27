@@ -37,7 +37,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
         holder.mIdView.setText(mValues.get(position).name);
-        holder.mContentView.setText(mValues.get(position).value);
+        holder.mContentView.setText("$" + mValues.get(position).value);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

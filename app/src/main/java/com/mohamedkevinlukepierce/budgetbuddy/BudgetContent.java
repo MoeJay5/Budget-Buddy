@@ -26,8 +26,8 @@ public class BudgetContent {
         ITEM_MAP.put(item.id, item);
     }
 
-    public static BudgetItem createBudgetItem(String name, String value) {
-        return new BudgetItem(String.valueOf(name), name, value);
+    public static BudgetItem createBudgetItem(String name, String value, String type) {
+        return new BudgetItem(String.valueOf(name), name, value, type);
     }
 
     /**
@@ -37,11 +37,13 @@ public class BudgetContent {
         public final String id;
         public final String name;
         public final String value;
+        public final String type;
 
-        public BudgetItem(String id, String name, String value) {
+        public BudgetItem(String id, String name, String value, String type) {
             this.id = id;
             this.name = name;
             this.value = value;
+            this.type = type;
         }
 
         @Override

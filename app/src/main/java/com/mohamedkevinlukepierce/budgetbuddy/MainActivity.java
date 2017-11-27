@@ -4,7 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
+
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ListFragment;
@@ -36,6 +36,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.mohamedkevinlukepierce.budgetbuddy.BudgetContent;
 
 import java.util.List;
@@ -85,68 +87,19 @@ public class MainActivity
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        // listeners for the two floating action sub buttons
+        FloatingActionButton fabExpense = (FloatingActionButton) findViewById(R.id.fabExpense);
+        FloatingActionButton fabSaving = (FloatingActionButton) findViewById(R.id.fabSaving);
+        fabExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                LinearLayout layout = new LinearLayout(MainActivity.this);
-                TextInputLayout name = new TextInputLayout(MainActivity.this);
-                TextInputLayout value = new TextInputLayout(MainActivity.this);
-                final EditText editTextValue = new EditText(MainActivity.this);
-                final EditText editTextName = new EditText(MainActivity.this);
-                editTextName.setInputType(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT);
-                // disable non integer inputs and uses numeric keyboard
-                editTextValue.setInputType(InputType.TYPE_CLASS_NUMBER);
-                editTextName.setMaxLines(1);
-                editTextValue.setMaxLines(1);
-                editTextName.setHint("Enter name of item");
-                editTextValue.setHint("Enter amount");
-                // set the enter button to be done
-                editTextValue.setImeOptions(EditorInfo.IME_ACTION_DONE);
-                // sets the min length of the field
-                editTextName.setMinEms(10);
-                editTextValue.setMinEms(10);
-                // adds edit text objects to a container for floating label
-                name.addView(editTextName);
-                value.addView(editTextValue);
-                layout.addView(name);
-                layout.addView(value);
-                layout.setPadding(10, 50, 10, 10);
-                layout.setOrientation(LinearLayout.VERTICAL);
-                layout.setGravity(Gravity.CENTER_HORIZONTAL);
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder .setView(layout)
-                        .setCancelable(true)
-                        .setPositiveButton("Add", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                String stringName = editTextName.getText().toString();
-                                String stringValue = editTextValue.getText().toString();
-                                if (stringName.isEmpty()) {
-                                    // alert the user with a toast message if the name field is empty
-                                    Toast.makeText(MainActivity.this, "Please enter a name.", Toast.LENGTH_SHORT).show();
-
-                                }
-                                else if (stringValue.isEmpty()) {
-                                    // alert the user with a toast message if the number field is empty
-                                    Toast.makeText(MainActivity.this, "Please enter a number.", Toast.LENGTH_SHORT).show();
-                                }
-                                else {
-                                    BudgetContent.addItem(createBudgetItem(stringName, stringValue));
-                                    overviewFragment.refreshList();
-                                    Toast.makeText(MainActivity.this, stringName + " was added to your list.", Toast.LENGTH_SHORT).show();
-
-                                }
-
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                // do nothing when canceled
-                            }
-                        });
-                AlertDialog alert = builder.create();
-                alert.show();
+                addListItem(view, "expense");
+            }
+        });
+        fabSaving.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addListItem(view, "savings");
             }
         });
 
@@ -158,6 +111,71 @@ public class MainActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+    }
+
+    // method to add an item to the overview list
+    public void addListItem(View view, final String type) {
+        FloatingActionMenu fab = (FloatingActionMenu) findViewById(R.id.fab);
+        fab.close(true);
+        LinearLayout layout = new LinearLayout(MainActivity.this);
+        TextInputLayout name = new TextInputLayout(MainActivity.this);
+        TextInputLayout value = new TextInputLayout(MainActivity.this);
+        final EditText editTextValue = new EditText(MainActivity.this);
+        final EditText editTextName = new EditText(MainActivity.this);
+        editTextName.setInputType(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT);
+        // disable non integer inputs and uses numeric keyboard
+        editTextValue.setInputType(InputType.TYPE_CLASS_NUMBER);
+        editTextName.setMaxLines(1);
+        editTextValue.setMaxLines(1);
+        editTextName.setHint("Enter name of item");
+        editTextValue.setHint("Enter amount");
+        // set the enter button to be done
+        editTextValue.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        // sets the min length of the field
+        editTextName.setMinEms(10);
+        editTextValue.setMinEms(10);
+        // adds edit text objects to a container for floating label
+        name.addView(editTextName);
+        value.addView(editTextValue);
+        layout.addView(name);
+        layout.addView(value);
+        layout.setPadding(10, 50, 10, 10);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setGravity(Gravity.CENTER_HORIZONTAL);
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        builder .setView(layout)
+                .setCancelable(true)
+                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        String stringName = editTextName.getText().toString();
+                        String stringValue = editTextValue.getText().toString();
+                        if (stringName.isEmpty()) {
+                            // alert the user with a toast message if the name field is empty
+                            Toast.makeText(MainActivity.this, "Please enter a name.", Toast.LENGTH_SHORT).show();
+
+                        }
+                        else if (stringValue.isEmpty()) {
+                            // alert the user with a toast message if the number field is empty
+                            Toast.makeText(MainActivity.this, "Please enter a number.", Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            BudgetContent.addItem(createBudgetItem(stringName, stringValue, type));
+                            overviewFragment.refreshList();
+                            Toast.makeText(MainActivity.this, stringName + " was added to your list.", Toast.LENGTH_SHORT).show();
+
+                        }
+
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing when canceled
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.show();
+
     }
 
     @Override

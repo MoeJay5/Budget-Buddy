@@ -31,13 +31,13 @@ public class ProfileActivity extends AppCompatActivity{ //profile selection logi
         setContentView(R.layout.activity_profile_selection);
 
         profile1 = (Button) findViewById(R.id.profileButton1);
-        profile1.setText(savedPreference.getString("profile1", "Profile 1")); //Calling from saved data, if non exist then return "Profile 1"
+        profile1.setText(savedPreference.getString("name1", "Profile 1")); //Calling from saved data, if non exist then return "Profile 1"
 
         profile2 = (Button) findViewById(R.id.profileButton2);
-        profile2.setText(savedPreference.getString("profile2", "Profile 2")); //Calling from saved data, if non exist then return "Profile 2"
+        profile2.setText(savedPreference.getString("name2", "Profile 2")); //Calling from saved data, if non exist then return "Profile 2"
 
         profile3 = (Button) findViewById(R.id.profileButton3);
-        profile3.setText(savedPreference.getString("profile3", "Profile 3")); //Calling from saved data, if non exist then return "Profile 3"
+        profile3.setText(savedPreference.getString("name3", "Profile 3")); //Calling from saved data, if non exist then return "Profile 3"
 
         profile1.setOnClickListener(
                 new Button.OnClickListener() {
@@ -69,7 +69,8 @@ public class ProfileActivity extends AppCompatActivity{ //profile selection logi
     {
         SharedPreferences savedPreference = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
         Intent intent;
-        if(savedPreference.getString(String.format("pin%d", loginState), "null") == "null" || savedPreference.getString(String.format("pin%d", loginState), "null") == "") //If PIN non existent then skip to Main Activity
+        //If PIN non existent then skip to Main Activity
+        if(savedPreference.getString(String.format("pin%d", loginState), "null") == "null" || savedPreference.getString(String.format("pin%d", loginState), "null") == "")
             intent = new Intent(getApplicationContext(), SettingsActivity.class);
         else
             intent = new Intent(getApplicationContext(), LoginActivity.class);

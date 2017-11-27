@@ -8,6 +8,19 @@
     <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
 
     <EditTextPreference
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:dialogIcon="@android:drawable/sym_def_app_icon"
+        android:hint="Enter New Profile Name."
+        android:icon="@android:drawable/sym_def_app_icon"
+        android:inputType="textPersonName"
+        android:key="ChangeName"
+        android:maxLength="32"
+        android:scrollbars="vertical"
+        android:selectAllOnFocus="true"
+        android:singleLine="false"
+        android:title="Change Profile Name" />
+    <EditTextPreference
         android:dialogIcon="@android:drawable/ic_lock_idle_lock"
         android:icon="@android:drawable/ic_lock_idle_lock"
         android:inputType="numberPassword"

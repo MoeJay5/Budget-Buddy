@@ -14,9 +14,6 @@ import android.widget.ImageButton;
 
 public class ProfileEvent extends AppCompatActivity { //Profile Objects
 
-
-    public static final String SHARED_PREFS = "ProfileNames";
-
     public static EditText profileUserText;
     private ImageButton addProfileBtn;
 
@@ -25,8 +22,8 @@ public class ProfileEvent extends AppCompatActivity { //Profile Objects
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_edit);
 
-        SharedPreferences sharedProfiles = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE); //Where data for profiles is saved
-        SharedPreferences.Editor editor = sharedProfiles.edit(); //Data editor
+        SharedPreferences sharedPreferences = getSharedPreferences(ProfileActivity.SHARED_PREFS, MODE_PRIVATE); //Where data for profiles is saved
+        SharedPreferences.Editor editor = sharedPreferences.edit(); //Data editor
 
         profileUserText = (EditText) findViewById(R.id.profileUserText);
         addProfileBtn = (ImageButton) findViewById(R.id.addProfileSelect);
@@ -51,7 +48,7 @@ public class ProfileEvent extends AppCompatActivity { //Profile Objects
         addProfileBtn.setOnClickListener(
                 new Button.OnClickListener() {
                     public void onClick(View v) {
-                        SharedPreferences sharedProfiles = getSharedPreferences(SHARED_PREFS, MODE_PRIVATE);
+                        SharedPreferences sharedProfiles = getSharedPreferences(ProfileActivity.SHARED_PREFS, MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedProfiles.edit();
                         if (ProfileActivity.state == 1)
                             editor.putString("profile1", profileUserText.getText().toString()); //Saving user input to data

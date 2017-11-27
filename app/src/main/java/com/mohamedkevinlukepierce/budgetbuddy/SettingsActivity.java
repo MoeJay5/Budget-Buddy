@@ -3,6 +3,7 @@ package com.mohamedkevinlukepierce.budgetbuddy;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
@@ -18,6 +19,7 @@ import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
 import android.view.MenuItem;
+import android.widget.Switch;
 
 import java.util.List;
 
@@ -33,6 +35,9 @@ import java.util.List;
  * API Guide</a> for more information on developing a Settings UI.
  */
 public class SettingsActivity extends AppCompatPreferenceActivity {
+
+    private static SharedPreferences sharedPreferences;
+    private static SharedPreferences.Editor editor;
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -105,12 +110,26 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
      * @see #sBindPreferenceSummaryToValueListener
      */
 
+    //MY CODE --->
+    @Override
+    public void onRestart() { //When back button is pressed on Android device the layout is refreshed
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        sharedPreferences = getSharedPreferences(ProfileActivity.SHARED_PREFS, MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        if(sharedPreferences.getBoolean("darkThemeEnabled", false))
+            setTheme(R.style.AppTheme_Dark);
+
         super.onCreate(savedInstanceState);
         setupActionBar();
+
     }
+    //<--- MY CODE
 
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
@@ -158,10 +177,26 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class GeneralPreferenceFragment extends PreferenceFragment {
         @Override
-        public void onCreate(Bundle savedInstanceState) {
+        public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
+
+            //MY CODE --->
+            Preference darkThemePref = (Preference) findPreference("darkThemeCheck");
+
+            darkThemePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object o) {
+                    editor.putBoolean("darkThemeEnabled", (boolean) o);
+                    editor.apply();
+                    startActivity(getActivity().getIntent().setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));; //Refreshes layout
+                    return true;
+                }
+            });
+            //<--- MY CODE
+
+
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are

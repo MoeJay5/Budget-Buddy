@@ -37,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     @Override
+    public void onRestart() { //When back button is pressed on Android device the layout is refreshed
+        super.onRestart();
+        finish();
+        startActivity(getIntent());
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

@@ -247,7 +247,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                     return true;
                 }
             });
-            //<---- Code not provided by API
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
@@ -255,6 +254,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // guidelines.
         }
 
+
+        //Functionality for back button by Action Bar
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             int id = item.getItemId();
@@ -265,6 +266,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             return super.onOptionsItemSelected(item);
         }
     }
+
+    //<---- Code not provided by API
 
     /**
      * This fragment shows notification preferences only. It is used when the

@@ -10,7 +10,11 @@
     <color name="darkColorPrimaryDark">#1a237e</color>
     <color name="darkColorAccent">#218d3c</color>
 
+
     <!-- Pin code login -->
     <color name="gray">#9E9E9E</color>
 
+
+    <color name="fabPrimary">#f44336</color>
+    <color name="fabRipple">#ffffff</color>
 </resources>

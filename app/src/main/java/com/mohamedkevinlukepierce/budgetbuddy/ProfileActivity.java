@@ -71,7 +71,7 @@ public class ProfileActivity extends AppCompatActivity{ //profile selection logi
         Intent intent;
         //If PIN non existent then skip to Main Activity
         if(savedPreference.getString(String.format("pin%d", loginState), "null") == "null" || savedPreference.getString(String.format("pin%d", loginState), "null") == "")
-            intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            intent = new Intent(getApplicationContext(), MainActivity.class);
         else
             intent = new Intent(getApplicationContext(), LoginActivity.class);
         startActivity(intent);

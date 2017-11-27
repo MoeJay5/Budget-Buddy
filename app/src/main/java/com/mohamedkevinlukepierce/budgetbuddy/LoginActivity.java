@@ -50,7 +50,7 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onComplete(String pin){
                 if(pin.equals(savedPreference.getString(String.format("pin%d", ProfileActivity.state), "null"))){
-                    Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 }
                 else{//wrong PIN entered

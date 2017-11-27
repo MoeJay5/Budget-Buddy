@@ -29,6 +29,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -89,38 +90,62 @@ public class MainActivity
             @Override
             public void onClick(View view) {
                 LinearLayout layout = new LinearLayout(MainActivity.this);
+                TextInputLayout name = new TextInputLayout(MainActivity.this);
+                TextInputLayout value = new TextInputLayout(MainActivity.this);
                 final EditText editTextValue = new EditText(MainActivity.this);
                 final EditText editTextName = new EditText(MainActivity.this);
+                editTextName.setInputType(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT);
+                // disable non integer inputs and uses numeric keyboard
                 editTextValue.setInputType(InputType.TYPE_CLASS_NUMBER);
+                editTextName.setMaxLines(1);
+                editTextValue.setMaxLines(1);
                 editTextName.setHint("Enter name of item");
                 editTextValue.setHint("Enter amount");
-                editTextValue.setGravity(Gravity.CENTER_HORIZONTAL);
-                editTextName.setGravity(Gravity.CENTER_HORIZONTAL);
-                layout.addView(editTextName);
-                layout.addView(editTextValue);
+                // set the enter button to be done
+                editTextValue.setImeOptions(EditorInfo.IME_ACTION_DONE);
+                // sets the min length of the field
+                editTextName.setMinEms(10);
+                editTextValue.setMinEms(10);
+                // adds edit text objects to a container for floating label
+                name.addView(editTextName);
+                value.addView(editTextValue);
+                layout.addView(name);
+                layout.addView(value);
+                layout.setPadding(10, 50, 10, 10);
                 layout.setOrientation(LinearLayout.VERTICAL);
                 layout.setGravity(Gravity.CENTER_HORIZONTAL);
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setMessage("Enter the amount")
-                        .setView(layout)
+                builder .setView(layout)
                         .setCancelable(true)
                         .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                //do things
-
                                 String stringName = editTextName.getText().toString();
                                 String stringValue = editTextValue.getText().toString();
-                                if (stringValue.isEmpty()) {
-                                    // alert the user with a toast message if the input field is empty
+                                if (stringName.isEmpty()) {
+                                    // alert the user with a toast message if the name field is empty
+                                    Toast.makeText(MainActivity.this, "Please enter a name.", Toast.LENGTH_SHORT).show();
+
+                                }
+                                else if (stringValue.isEmpty()) {
+                                    // alert the user with a toast message if the number field is empty
                                     Toast.makeText(MainActivity.this, "Please enter a number.", Toast.LENGTH_SHORT).show();
                                 }
                                 else {
                                     BudgetContent.addItem(createBudgetItem(stringName, stringValue));
                                     overviewFragment.refreshList();
+                                    Toast.makeText(MainActivity.this, stringName + " was added to your list.", Toast.LENGTH_SHORT).show();
+
                                 }
 
                             }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
                         });
+
                 AlertDialog alert = builder.create();
                 alert.show();
 

@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity{
         });
 
         mPinLockView.setPinLength(4);
-        mPinLockView.setTextColor(ContextCompat.getColor(this, R.color.black));
+        mPinLockView.setTextColor(ContextCompat.getColor(this, R.color.gray));
 
         mIndicatorDots.setIndicatorType(IndicatorDots.IndicatorType.FILL_WITH_ANIMATION);
     }

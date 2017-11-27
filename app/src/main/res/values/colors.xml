@@ -11,6 +11,6 @@
     <color name="darkColorAccent">#218d3c</color>
 
     <!-- Pin code login -->
-    <color name="black">#000000</color>
+    <color name="gray">#9E9E9E</color>
 
 </resources>

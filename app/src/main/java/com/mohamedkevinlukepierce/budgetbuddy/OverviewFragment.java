@@ -1,6 +1,7 @@
 package com.mohamedkevinlukepierce.budgetbuddy;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
@@ -33,6 +34,7 @@ public class OverviewFragment extends Fragment {
     private DividerItemDecoration mDividerItemDecoration;
     private OnListFragmentInteractionListener mListener;
     private static MyItemRecyclerViewAdapter mMyItemRecyclerViewAdapter;
+
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the

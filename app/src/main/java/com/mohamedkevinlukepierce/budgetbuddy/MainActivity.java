@@ -1,6 +1,7 @@
 package com.mohamedkevinlukepierce.budgetbuddy;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -68,11 +69,15 @@ public class MainActivity
     private Intent intent;
     private static SharedPreferences generalSharedPreferences;
     private static SharedPreferences.Editor generalEditor;
+    public static Context contextOfApplication;
 
     /**
      * The {@link ViewPager} that will host the section contents.
      */
 
+    public static Context getContextOfApplication(){
+        return contextOfApplication;
+    }
 
     @Override
     public void onRestart() { //When back button is pressed on Android device the layout is refreshed
@@ -85,6 +90,7 @@ public class MainActivity
     protected void onCreate(Bundle savedInstanceState) {
         generalSharedPreferences = getSharedPreferences("General Preference", MODE_PRIVATE);
         generalEditor = generalSharedPreferences.edit();
+        contextOfApplication = getApplicationContext();
 
         if(generalSharedPreferences.getBoolean("darkThemeEnabled", false))
             setTheme(R.style.AppTheme_Dark_NoActionBar);

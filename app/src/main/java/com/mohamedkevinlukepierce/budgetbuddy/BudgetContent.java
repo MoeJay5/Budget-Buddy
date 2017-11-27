@@ -1,5 +1,9 @@
 package com.mohamedkevinlukepierce.budgetbuddy;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,10 +15,15 @@ import java.util.Map;
 
 public class BudgetContent {
 
+    private static Context applicationContext = MainActivity.getContextOfApplication();
+    private static  SharedPreferences generalSharedPreferences;
+    private static SharedPreferences.Editor generalEditor;
+
     /**
      * An array of budget items.
      */
     public static final List<BudgetItem> ITEMS = new ArrayList<BudgetItem>();
+
 
     public static final List<BudgetItem> HOLD = new ArrayList<BudgetItem>();
     /**
@@ -34,13 +43,20 @@ public class BudgetContent {
     }
 
     public static void addItem(BudgetItem item) {
+        generalSharedPreferences = applicationContext.getSharedPreferences("General Preference", 0);
+        generalEditor = generalSharedPreferences.edit();
+
+
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
         int itemValue = Integer.parseInt(item.value);
+        totalBudget = generalSharedPreferences.getFloat(String.format("totalBudget%d", ProfileActivity.state), totalBudget);
         totalBudget += itemValue;
+        generalEditor.putFloat(String.format("totalBudget%d", ProfileActivity.state), totalBudget);
         if (itemValue < 0) {
             totalExpense += (-1) * itemValue;
         }
+
     }
 
     public static BudgetItem createBudgetItem(String name, String value, String type) {

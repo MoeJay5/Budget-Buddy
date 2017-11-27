@@ -14,7 +14,6 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.RingtonePreference;
 import android.text.TextUtils;
@@ -37,7 +36,7 @@ import java.util.List;
 public class SettingsActivity extends AppCompatPreferenceActivity {
 
     private static SharedPreferences generalSharedPreferences;
-    private static SharedPreferences.Editor editor;
+    private static SharedPreferences.Editor generalEditor;
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -125,7 +124,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         generalSharedPreferences = getSharedPreferences("General Preference", MODE_PRIVATE);
-        editor = generalSharedPreferences.edit();
+        generalEditor = generalSharedPreferences.edit();
 
         if(generalSharedPreferences.getBoolean("darkThemeEnabled", false)) {
             setTheme(R.style.AppTheme_Dark);
@@ -203,8 +202,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                   @Override
                   public boolean onPreferenceChange(Preference preference, Object input) {
                       if (input.toString().length() != 0 && (String) input != "null") {
-                          editor.putString(String.format("name%d", ProfileActivity.state), (String) input);
-                          editor.apply();
+                          generalEditor.putString(String.format("name%d", ProfileActivity.state), (String) input);
+                          generalEditor.apply();
                           Toast.makeText(getActivity(), "Name successfully changed to " + (String) input + "!", Toast.LENGTH_LONG).show();
                       } else
                           Toast.makeText(getActivity(), "Name entry invalid.", Toast.LENGTH_LONG).show();
@@ -218,8 +217,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object input) {
                     if (input.toString().length() == 4) {
-                        editor.putString(String.format("pin%d", ProfileActivity.state), (String) input);
-                        editor.apply();
+                        generalEditor.putString(String.format("pin%d", ProfileActivity.state), (String) input);
+                        generalEditor.apply();
                         Toast.makeText(getActivity(), "PIN successfully changed!", Toast.LENGTH_LONG).show();
                     } else
                         Toast.makeText(getActivity(), "PIN must be 4 digits.", Toast.LENGTH_LONG).show();
@@ -232,8 +231,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             darkThemePref.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object input) {
-                    editor.putBoolean("darkThemeEnabled", (boolean) input);
-                    editor.apply();
+                    generalEditor.putBoolean("darkThemeEnabled", (boolean) input);
+                    generalEditor.apply();
                     //Refreshes layout
                     startActivity(getActivity().getIntent().setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                     return true;

@@ -23,8 +23,9 @@ public class ProfileActivity extends AppCompatActivity{ //profile selection logi
 
         SharedPreferences generalSharedPreference = getSharedPreferences("General Preference", MODE_PRIVATE);
 
-        if (generalSharedPreference.getBoolean("darkThemeEnabled", false))
+        if (generalSharedPreference.getBoolean("darkThemeEnabled", false)) {
             setTheme(R.style.AppTheme_Dark);
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_selection);

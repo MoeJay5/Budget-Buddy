@@ -16,6 +16,7 @@ public class BudgetContent {
      */
     public static final List<BudgetItem> ITEMS = new ArrayList<BudgetItem>();
 
+    public static final List<BudgetItem> HOLD = new ArrayList<BudgetItem>();
     /**
      * A map of budget items, by ID.
      */

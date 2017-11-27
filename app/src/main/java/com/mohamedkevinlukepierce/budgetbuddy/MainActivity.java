@@ -43,6 +43,8 @@ import com.mohamedkevinlukepierce.budgetbuddy.BudgetContent;
 
 import java.util.List;
 
+import static com.mohamedkevinlukepierce.budgetbuddy.BudgetContent.HOLD;
+import static com.mohamedkevinlukepierce.budgetbuddy.BudgetContent.ITEMS;
 import static com.mohamedkevinlukepierce.budgetbuddy.BudgetContent.createBudgetItem;
 
 public class MainActivity
@@ -262,17 +264,56 @@ public class MainActivity
         int id = Item.getItemId();
 
         if (id == R.id.nav_home) {
-            // Handle the home action
+
+            while(!HOLD.isEmpty()){
+                ITEMS.add(HOLD.remove(0));
+            }
+            OverviewFragment.refreshList();
+
         } else if (id == R.id.nav_expenses) {
+
+
+            while(!HOLD.isEmpty()){
+                ITEMS.add(HOLD.remove(0));
+            }
+
+            int i = 0;
+            while(i < ITEMS.size()){
+                if(ITEMS.get(i).getType().equalsIgnoreCase("savings")){
+                    HOLD.add(ITEMS.remove(i));
+                }
+                else{
+                    i++;
+                }
+
+            }
+            OverviewFragment.refreshList();
 
         } else if (id == R.id.nav_savings) {
 
+            while(!HOLD.isEmpty()){
+                ITEMS.add(HOLD.remove(0));
+            }
+
+            int i = 0;
+            while(i < ITEMS.size()){
+                if(ITEMS.get(i).getType().equalsIgnoreCase("expense")){
+                    HOLD.add(ITEMS.remove(i));
+                }
+                else{
+                    i++;
+                }
+
+            }
+            OverviewFragment.refreshList();
+
         } else if (id == R.id.nav_settings) {
             intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_logout) {
 
         }
-        startActivity(intent);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

@@ -309,10 +309,11 @@ public class MainActivity
 
         } else if (id == R.id.nav_settings) {
             intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_logout) {
 
         }
-        startActivity(intent);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

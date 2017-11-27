@@ -32,7 +32,7 @@ public class OverviewFragment extends Fragment {
     private LinearLayoutManager mLinearLayoutManager;
     private DividerItemDecoration mDividerItemDecoration;
     private OnListFragmentInteractionListener mListener;
-    private MyItemRecyclerViewAdapter mMyItemRecyclerViewAdapter;
+    private static MyItemRecyclerViewAdapter mMyItemRecyclerViewAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -87,7 +87,7 @@ public class OverviewFragment extends Fragment {
         return view;
     }
 
-    public void refreshList() {
+    public static void refreshList() {
         mMyItemRecyclerViewAdapter.notifyDataSetChanged();
     }
 

@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.mohamedkevinlukepierce.budgetbuddy.OverviewFragment.OnListFragmentInteractionListener;
 import com.mohamedkevinlukepierce.budgetbuddy.BudgetContent.BudgetItem;
@@ -49,14 +50,30 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         }
         holder.mContentView.setText(valueStr);
 
-        holder.mView.setOnClickListener(new View.OnClickListener() {
+        holder.mView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
+            public boolean onLongClick(View v) {
                 if (null != mListener) {
+
+                    int position = holder.getAdapterPosition();
+                    BudgetItem holding = mValues.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position,mValues.size());
+
+                    if(holding.getType().equalsIgnoreCase("savings")){
+                        BudgetContent.setTotalBudget(BudgetContent.getTotalBudget() - Integer.parseInt(holding.value));
+                    }
+                    else{
+                        BudgetContent.setTotalExpense(BudgetContent.getTotalExpense() + Integer.parseInt(holding.value));
+                    }
+
+                    Toast.makeText(v.getContext(),"Deleted!", Toast.LENGTH_LONG).show();
+
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
                     mListener.onListFragmentInteraction(holder.mItem);
                 }
+                return true;
             }
         });
     }

@@ -29,9 +29,13 @@ public class BudgetContent {
         return totalBudget;
     }
 
+    public static void setTotalBudget(float newBudget) { totalBudget = newBudget;}
+
     public static float getTotalExpense() {
         return totalExpense;
     }
+
+    public static void setTotalExpense(float newExpense) { totalExpense = newExpense;}
 
     public static void addItem(BudgetItem item) {
         ITEMS.add(item);

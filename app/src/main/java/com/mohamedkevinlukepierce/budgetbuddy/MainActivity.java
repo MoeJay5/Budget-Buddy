@@ -26,6 +26,7 @@ import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,6 +34,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -172,6 +174,9 @@ public class MainActivity
         TextInputLayout value = new TextInputLayout(MainActivity.this);
         final EditText editTextValue = new EditText(MainActivity.this);
         final EditText editTextName = new EditText(MainActivity.this);
+        // opens keyboard
+        final InputMethodManager imm = (InputMethodManager)   getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
         editTextName.setInputType(InputType.TYPE_TEXT_FLAG_AUTO_CORRECT);
         // disable non integer inputs and uses numeric keyboard
         editTextValue.setInputType(InputType.TYPE_CLASS_NUMBER);
@@ -194,7 +199,7 @@ public class MainActivity
         layout.setGravity(Gravity.CENTER_HORIZONTAL);
         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
         builder .setView(layout)
-                .setCancelable(true)
+                .setCancelable(false)
                 .setPositiveButton("Add", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         String stringName = editTextName.getText().toString();
@@ -214,15 +219,15 @@ public class MainActivity
                             reportsFragment.refreshPie();
                             reportsFragment.animation();
                             Toast.makeText(MainActivity.this, stringName + " was added to your list.", Toast.LENGTH_SHORT).show();
-
                         }
-
+                        imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS, 0);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // do nothing when canceled
+                        imm.toggleSoftInput(InputMethodManager.HIDE_NOT_ALWAYS, 0);
                     }
                 });
         AlertDialog alert = builder.create();

@@ -1,5 +1,6 @@
 package com.mohamedkevinlukepierce.budgetbuddy;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.SharedPreferences;
+
 
 import com.mohamedkevinlukepierce.budgetbuddy.OverviewFragment.OnListFragmentInteractionListener;
 import com.mohamedkevinlukepierce.budgetbuddy.BudgetContent.BudgetItem;
@@ -22,6 +25,10 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
 
     private final List<BudgetItem> mValues;
     private final OnListFragmentInteractionListener mListener;
+
+    private static Context applicationContext = MainActivity.getContextOfApplication();
+    private static  SharedPreferences generalSharedPreferences;
+    private static SharedPreferences.Editor generalEditor;
 
     public MyItemRecyclerViewAdapter(List<BudgetItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
@@ -60,13 +67,27 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
                     notifyItemRemoved(position);
                     notifyItemRangeChanged(position,mValues.size());
 
+                    float mtotalBudget;
+                    float mtotalExpense;
+
+                    generalSharedPreferences = applicationContext.getSharedPreferences("General Preference", applicationContext.MODE_PRIVATE);
+                    generalEditor = generalSharedPreferences.edit();
+
                     if(holding.getType().equalsIgnoreCase("savings")){
-                        BudgetContent.setTotalBudget(BudgetContent.getTotalBudget() - Integer.parseInt(holding.value));
+                        mtotalBudget = BudgetContent.getTotalBudget() - Integer.parseInt(holding.value);
+                        BudgetContent.setTotalBudget(mtotalBudget);
+                        generalEditor.putFloat("totalBudget", mtotalBudget);
                     }
                     else{
-                        BudgetContent.setTotalExpense(BudgetContent.getTotalExpense() + Integer.parseInt(holding.value));
-                        BudgetContent.setTotalBudget(BudgetContent.getTotalBudget() - Integer.parseInt(holding.value));
+                        mtotalBudget = BudgetContent.getTotalExpense() + Integer.parseInt(holding.value);
+                        BudgetContent.setTotalExpense(mtotalBudget);
+                        mtotalExpense = BudgetContent.getTotalBudget() - Integer.parseInt(holding.value);
+                        BudgetContent.setTotalBudget(mtotalExpense);
+                        generalEditor.putFloat("totalBudget", mtotalBudget);
+                        generalEditor.putFloat("totalExpense", mtotalExpense);
                     }
+
+                    generalEditor.apply();
 
                     Toast.makeText(v.getContext(),"Deleted!", Toast.LENGTH_LONG).show();
 

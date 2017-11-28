@@ -65,6 +65,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
                     }
                     else{
                         BudgetContent.setTotalExpense(BudgetContent.getTotalExpense() + Integer.parseInt(holding.value));
+                        BudgetContent.setTotalBudget(BudgetContent.getTotalBudget() - Integer.parseInt(holding.value));
                     }
 
                     Toast.makeText(v.getContext(),"Deleted!", Toast.LENGTH_LONG).show();
@@ -92,7 +93,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerView.Adapter<MyItemRecycl
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.name);
+            mIdView = (TextView) view.findViewById(R.id.nameItem);
             mContentView = (TextView) view.findViewById(R.id.value);
         }
 

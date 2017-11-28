@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity{
 
             @Override
             public void onComplete(String pin){
-                if(pin.equals(generalSharedPreference.getString(String.format("pin%d", ProfileActivity.state), "null"))){
+                if(pin.equals(generalSharedPreference.getString("pin", "null"))){
                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 }

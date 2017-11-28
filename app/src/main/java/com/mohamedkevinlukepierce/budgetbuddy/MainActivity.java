@@ -252,7 +252,7 @@ public class MainActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         TextView navName = (TextView) findViewById(R.id.profileNameNav);
-        navName.setText(generalSharedPreferences.getString(String.format("name%d", ProfileActivity.state),String.format("Profile %d", ProfileActivity.state)));
+        navName.setText(generalSharedPreferences.getString("name","Profile"));
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;

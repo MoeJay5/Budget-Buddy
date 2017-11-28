@@ -202,7 +202,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                   @Override
                   public boolean onPreferenceChange(Preference preference, Object input) {
                       if (input.toString().length() != 0 && (String) input != "null") {
-                          generalEditor.putString(String.format("name%d", ProfileActivity.state), (String) input);
+                          generalEditor.putString("name", (String) input);
                           generalEditor.apply();
                           Toast.makeText(getActivity(), "Name successfully changed to " + (String) input + "!", Toast.LENGTH_LONG).show();
                       } else
@@ -217,7 +217,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 @Override
                 public boolean onPreferenceChange(Preference preference, Object input) {
                     if (input.toString().length() == 4) {
-                        generalEditor.putString(String.format("pin%d", ProfileActivity.state), (String) input);
+                        generalEditor.putString("pin", (String) input);
                         generalEditor.apply();
                         Toast.makeText(getActivity(), "PIN successfully changed!", Toast.LENGTH_LONG).show();
                     } else

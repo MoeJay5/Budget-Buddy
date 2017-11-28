@@ -251,6 +251,8 @@ public class MainActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        TextView navName = (TextView) findViewById(R.id.profileNameNav);
+        navName.setText(generalSharedPreferences.getString(String.format("name%d", ProfileActivity.state),String.format("Profile %d", ProfileActivity.state)));
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
@@ -327,9 +329,10 @@ public class MainActivity
             intent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_logout) {
-
+            intent = new Intent(getApplicationContext(), ProfileActivity.class);
+            Toast.makeText(getApplicationContext(), "Profile logged out.", Toast.LENGTH_LONG).show();
+            startActivity(intent);
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

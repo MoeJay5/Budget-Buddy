@@ -46,6 +46,8 @@ public class BudgetContent {
         generalSharedPreferences = applicationContext.getSharedPreferences("General Preference", applicationContext.MODE_PRIVATE);
         generalEditor = generalSharedPreferences.edit();
         totalBudget = generalSharedPreferences.getFloat(String.format("totalBudget%d", ProfileActivity.state), totalBudget);
+        totalExpense = generalSharedPreferences.getFloat(String.format("totalExpense%d", ProfileActivity.state), totalExpense);
+
 
         ITEMS.add(item);
         ITEM_MAP.put(item.id, item);
@@ -56,6 +58,8 @@ public class BudgetContent {
         }
 
         generalEditor.putFloat(String.format("totalBudget%d", ProfileActivity.state), totalBudget);
+        generalEditor.putFloat(String.format("totalExpense%d", ProfileActivity.state), totalExpense);
+
         generalEditor.apply();
     }
 
